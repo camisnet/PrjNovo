@@ -1,9 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, ImageBackground, Text, View, TextInput, TouchableOpacity} from 'react-native';
+import Tempo from './components/Tempo';
+import Api from './components/Api';
+
 
 const image = { uri: "https://i.pinimg.com/originals/85/d6/b8/85d6b896ac59612102200dd3482009db.jpg" };
 
 export default function App() {
+  const [dados, setDados] = useState("");
+
+  async function carregaDados(){
+    const response = await Api.get(`weather?array_limit=1&fields=only_results,temp,city_name,description,forecast,max,min,date&key=3d5afcfa&city_name=sp`)
+      setDados(response.data.forecast[0]);
+  }
+  
   return (
     <View style={styles.container}>
       <ImageBackground  style={{
@@ -23,14 +33,15 @@ export default function App() {
         style={styles.input}
         />
         </View>
+
         <View>
-          <TouchableOpacity style={styles.botao}>
+          <TouchableOpacity style={styles.botao} onPress={carregaDados}>
             <Text style={styles.txtBotao}>Buscar</Text>
           </TouchableOpacity>
         </View>
 
         <View>
-
+          <Tempo data = {dados}/>
         </View>
     </View>
   );
@@ -76,4 +87,5 @@ const styles = StyleSheet.create({
     textAlign:'center',
     color: '#fff'
   },
+  
 });
