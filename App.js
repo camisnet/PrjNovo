@@ -40,11 +40,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 2,
     backgroundColor: '#fff',
-    top: 50,
+   
   },
   titulo: {
     fontSize:30,
-    textAlign:'center'
+    textAlign:'center',
+    top: 50
   },
   input:{
     width:'80%',
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
   
   label:{
     fontSize:20, 
-    top:35,
+    top:40,
   },
   botao:{
     width:'50%',
@@ -67,11 +68,11 @@ const styles = StyleSheet.create({
     fontSize: 30,
     textAlign:'center',
     height: 50,
-    backgroundColor: '#E6E6FA',
+    backgroundColor: 'purple',
     borderRadius: 50
   },
   txtBotao:{
-    fontSize:35,
+    fontSize:30,
     textAlign:'center',
     color: '#fff'
   },
