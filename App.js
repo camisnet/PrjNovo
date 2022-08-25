@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, ImageBackground, Text, View, TextInput, TouchableOpacity} from 'react-native';
+import { StyleSheet, Image, ImageBackground, Text, View, TextInput, TouchableOpacity} from 'react-native';
 import Tempo from './components/Tempo';
 import Api from './components/Api';
 
@@ -8,9 +8,9 @@ const image = { uri: "https://i.pinimg.com/originals/85/d6/b8/85d6b896ac59612102
 
 export default function App() {
   const [dados, setDados] = useState("");
-
+  const [cidade, setCidade] = useState("");
   async function carregaDados(){
-    const response = await Api.get(`weather?array_limit=1&fields=only_results,temp,city_name,description,forecast,max,min,date&key=3d5afcfa&city_name=sp`)
+    const response = await Api.get(`weather?array_limit=2&fields=only_results,temp,city_name,time,forecast,max,min,date,description&key=3d5afcfa&city_name=${cidade}`)
       setDados(response.data.forecast[0]);
   }
   
@@ -23,6 +23,12 @@ export default function App() {
           }}source={image}>
     </ImageBackground>
       <View>
+      <Image
+        style={styles.tinyLogo}
+        source={{
+          uri: 'https://cdn-icons-png.flaticon.com/512/173/173582.png',
+        }}
+      />
         <Text style={styles.titulo}>Previsão do Tempo</Text>
         </View>
 
@@ -31,6 +37,7 @@ export default function App() {
         <TextInput
         placeholder='Digite sua cidade'
         style={styles.input}
+        onChangeText = {(value)=>setCidade(value)}
         />
         </View>
 
@@ -56,7 +63,7 @@ const styles = StyleSheet.create({
   titulo: {
     fontSize:30,
     textAlign:'center',
-    top: 50
+    top: 10
   },
   input:{
     width:'80%',
@@ -65,22 +72,28 @@ const styles = StyleSheet.create({
     borderBottomWidth:2,
     marginTop: 20,
     fontSize: 20,
-    top: 20,
+    top: 10,
   },
   
   label:{
     fontSize:20, 
-    top:40,
+    top:20,
   },
   botao:{
     width:'50%',
-    top: 50,
+    top: 28,
     marginLeft: '25%',
     fontSize: 30,
     textAlign:'center',
     height: 50,
     backgroundColor: 'purple',
     borderRadius: 50
+  },
+  tinyLogo: {
+    width: 50,
+    height: 50,
+    top: 55,
+    left: '83%'
   },
   txtBotao:{
     fontSize:30,
