@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import { StyleSheet, Image, ImageBackground, Text, View, TextInput, TouchableOpacity} from 'react-native';
+import { StyleSheet, Image, ImageBackground, FlatList, Text, View, TextInput, TouchableOpacity} from 'react-native';
 import Tempo from './components/Tempo';
 import Api from './components/Api';
+
 
 
 const image = { uri: "https://i.pinimg.com/originals/85/d6/b8/85d6b896ac59612102200dd3482009db.jpg" };
@@ -10,8 +11,8 @@ export default function App() {
   const [dados, setDados] = useState("");
   const [cidade, setCidade] = useState("");
   async function carregaDados(){
-    const response = await Api.get(`weather?array_limit=2&fields=only_results,temp,city_name,time,forecast,max,min,date,description&key=3d5afcfa&city_name=${cidade}`)
-      setDados(response.data.forecast[0]);
+    const response = await Api.get(`weather?array_limit=10&fields=only_results,temp,city_name,time,forecast,max,min,date,description&key=6af8e153&city_name=${cidade}`)
+      setDados(response.data.forecast);
   }
   
   return (
@@ -48,8 +49,29 @@ export default function App() {
         </View>
 
         <View>
+          {/*
           <Tempo data = {dados}/>
+          */}
+
+          <FlatList
+          data = {dados}
+          renderItem = {({item})=>{
+          return(
+          <View>
+            <Text style={styles.texto}>Data:{item.date} 
+             {'\n'}
+            Max.:{item.max} 
+            {'\n'}
+            Min.:{item.min} 
+            {'\n'}
+           Descrição:{item.description} </Text>
+          </View>
+         );
+          
+        }}
+          />
         </View>
+
     </View>
   );
 }
@@ -100,5 +122,17 @@ const styles = StyleSheet.create({
     textAlign:'center',
     color: '#fff'
   },
-  
+  texto:{
+ fontWeight: 'bold',
+        fontSize: 17,
+        marginTop:5,
+        top: 38,
+        width: '65%',
+        padding: 5,
+        borderRadius: 15, 
+        left: 83,
+        backgroundColor: 'white',
+        opacity: 0.7,
+        marginBottom:10
+  }
 });
